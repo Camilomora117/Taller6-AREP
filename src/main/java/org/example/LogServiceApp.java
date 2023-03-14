@@ -13,14 +13,14 @@ public class LogServiceApp {
         mongoConnection.closeConnection();
         port(getPort());
 
+        get("/hello", (req, res) -> "Hello! esto es una Prueba");
+
         get("/service", (req,res) -> {
             mongoConnection.createConnection();
             List<String> colecctions = mongoConnection.getDocumentsColecction();
             mongoConnection.closeConnection();
             return colecctions;
         } );
-
-        get("/hello", (req, res) -> "Hello");
 
         post("/service", (req,res) -> {
             mongoConnection.createConnection();
