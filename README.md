@@ -75,6 +75,13 @@ Para subirlo comprimimos la carpeta en un archivo .zip y utulizamos put.
 
 ![image](https://user-images.githubusercontent.com/98135134/224522115-fd331fe3-d139-4e1f-b0e1-91ee475e6e54.png)
 
+Nos salimos con el comando "exit" y entramos nuevamente a la consola con ssh
+
+Para terminar descomprimimos la carpeta target.zip con el comando unzip:
+
+```
+unzip target.zip
+```
 
 ### 4. Mongo
 
@@ -145,13 +152,7 @@ Para esto editamos las reglas de entrada del grupo de seguridad y agregamos los 
 
 ### 6. Ejecutar
 
-Ahora descomprimimos los archivos .zip con el comando unzip:
-
-```
-unzip target.zip
-```
-
-y ejecutamos la carpeta con los siguientes comandos:
+Ejecutamos la carpeta target con el siguiente comando:
 
 ```
 //Para las instancias de logService
