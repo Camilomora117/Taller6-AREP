@@ -42,6 +42,8 @@ Abrimos una terminal de linux y ejecutamos el comando, teniendo en cuenta que en
 
 Para instalar java 17 utilizamos el siguiente comando en la terminal de la instancia.
 
+Recuerde que debe instalar java para las instancias de logService y la instancia de RoundRobin
+
 ```
 sudo yum install java-17-amazon-corretto-devel
 ```
@@ -51,41 +53,9 @@ Luego de instalar java verificamos que se instalo conrrectamente:
 ```
 java -version
 ```
+### 3. Mongo
 
-### 3. Implementación Round Robin
-
-Antes de utilizar las terminales de las instancias debemos modificar el codigo del servidor RoundRobin.
-
-Para esto el round robin decidira sobre las 3 ip publicas de las intancias de los logServices
-
-![image](https://user-images.githubusercontent.com/98135134/224867781-4e229b8d-8b6d-405c-b017-3b73209ba4de.png)
-
-El url completo para conectarnos a uns intancia de logService es:
-
-```
-http://{ip-logService}:4567/service
-
-4567 es el puerto donde corren los logService, y /service el path de los métodos.
-```
-
-Una vez tenemos el codigo debemos subirlo a las instancias de LogService y RoundRobin.
-
-Para esto debemos usar el protocolo sftp seguido del mismo comando que usamos para conectarnos a la consola localmente.
-Para subirlo comprimimos la carpeta en un archivo .zip y utulizamos put.
-
-![image](https://user-images.githubusercontent.com/98135134/224522115-fd331fe3-d139-4e1f-b0e1-91ee475e6e54.png)
-
-Nos salimos con el comando "exit" y entramos nuevamente a la consola con ssh
-
-Para terminar descomprimimos la carpeta target.zip con el comando unzip:
-
-```
-unzip target.zip
-```
-
-### 4. Mongo
-
-Ahora implementaremos el servidor de mongo db.
+Para empezar implementaremos el servidor de mongo db.
 
 Para esto abrimos una consola de la instancia de mongo localmente y por medio de vi creamos el siguiente archivo:
 
@@ -139,6 +109,41 @@ Verificamos su estado:
 
 ![image](https://user-images.githubusercontent.com/98135134/224521878-4e38ff17-b203-43b6-9e0a-b2829f4b4092.png)
 
+En el codigo debemos cambiar la url de la conexion a mongo con la ip publica de la instancia de mongo seguido del puerto donde corre mongo (27017)
+
+![image](https://user-images.githubusercontent.com/98135134/225461837-bbd6ed39-e8dd-4043-a8e3-902cd1cf8107.png)
+
+
+### 4. Implementación Round Robin
+
+Antes de utilizar las terminales de las instancias debemos modificar el codigo del servidor RoundRobin.
+
+Para esto el round robin decidira sobre las 3 ip publicas de las intancias de los logServices
+
+![image](https://user-images.githubusercontent.com/98135134/224867781-4e229b8d-8b6d-405c-b017-3b73209ba4de.png)
+
+El url completo para conectarnos a uns intancia de logService es:
+
+```
+http://{ip-logService}:4567/service
+
+4567 es el puerto donde corren los logService, y /service el path de los métodos.
+```
+
+Una vez tenemos el codigo debemos subirlo a las instancias de LogService y RoundRobin.
+
+Para esto debemos usar el protocolo sftp seguido del mismo comando que usamos para conectarnos a la consola localmente.
+Para subirlo comprimimos la carpeta en un archivo .zip y utulizamos put.
+
+![image](https://user-images.githubusercontent.com/98135134/224522115-fd331fe3-d139-4e1f-b0e1-91ee475e6e54.png)
+
+Nos salimos con el comando "exit" y entramos nuevamente a la consola con ssh
+
+Para terminar descomprimimos la carpeta target.zip con el comando unzip:
+
+```
+unzip target.zip
+```
 
 
 ### 5. Abrir los Puertos
