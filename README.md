@@ -21,7 +21,10 @@ Sebe construir una aplicación con la arquitectura propuesta y desplegarla en AW
 Para implementar la arquitectura lo primero que debemos hacer es crear las 5 instancias de maquinas virtuales. 
 Cada una será un servidor.
 
+Recomandación: Utilize el mismo grupo de seguridad para todas las instancias, con el fin de facilitar la configuración de los puertos mas adelante.
+
 ![image](https://user-images.githubusercontent.com/98135134/224521866-4d9279e9-17c7-47d9-9c2d-edb16867f8ce.png)
+
 
 ### 1. Conectar a local
 
@@ -34,7 +37,22 @@ Abrimos una terminal de linux y ejecutamos el comando, teniendo en cuenta que en
 
 ![image](https://user-images.githubusercontent.com/98135134/224522087-40551feb-8157-418d-a443-ebf189d204f1.png)
 
-### 2. Implementación Round Robin
+
+### 2. Instalamos Java (versión 17)
+
+Para instalar java 17 utilizamos el siguiente comando en la terminal de la instancia.
+
+```
+sudo yum install java-17-amazon-corretto-devel
+```
+
+Luego de instalar java verificamos que se instalo conrrectamente:
+
+```
+java -version
+```
+
+### 3. Implementación Round Robin
 
 Antes de utilizar las terminales de las instancias debemos modificar el codigo del servidor RoundRobin.
 
@@ -50,15 +68,7 @@ http://{ip-logService}:4567/service
 4567 es el puerto donde corren los logService, y /service el path de los métodos.
 ```
 
-### 3. Instalamos Java (versión 17)
-
-Para instalar java 17 utilizamos el siguiente comando en la terminal de la instancia.
-
-```
-sudo yum install java-17-amazon-corretto-devel
-```
-
-Luego de instalar java debemos subir la carpeta target del proyecto donde tenemos el codigo de los servidores.
+Una vez tenemos el codigo debemos subirlo a las instancias de LogService y RoundRobin.
 
 Para esto debemos usar el protocolo sftp seguido del mismo comando que usamos para conectarnos a la consola localmente.
 Para subirlo comprimimos la carpeta en un archivo .zip y utulizamos put.
@@ -85,7 +95,12 @@ baseurl=https://repo.mongodb.org/yum/amazon/2/mongodb-org/6.0/x86_64/
 gpgcheck=1
 enabled=1
 gpgkey=https://www.mongodb.org/static/pgp/server-6.0.asc
+```
 
+Instalamos mongo en la instancia con el siguiente comando:
+
+```
+sudo yum install -y mongodb-org
 ```
 
 Ahora debemos decirle a mongo que acepte cualquier ip para consultar la basen de datos.
@@ -93,7 +108,7 @@ Ahora debemos decirle a mongo que acepte cualquier ip para consultar la basen de
 Entramos al archivo mongod.conf con el siguiente comando:
 
 ```
-/etc/mongod.conf
+vi /etc/mongod.conf
 ```
 
 Y cambios la seccion bindIP.
